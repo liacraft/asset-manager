@@ -583,3 +583,111 @@ body {
     -webkit-overflow-scrolling: touch;
   }
 }
+
+/* =========================================================
+   DesignHub v10 — final navigation, auth and form polish
+   ========================================================= */
+
+/* Auth screen must genuinely hide when .hidden is present.
+   This fixes the app shell/topbar showing behind the login page. */
+.auth-screen.hidden {
+  display: none !important;
+}
+
+/* ---------- Topbar account actions ---------- */
+.top-logout {
+  width: 38px !important;
+  height: 38px !important;
+  min-width: 38px !important;
+  min-height: 38px !important;
+  padding: 0 !important;
+  margin: 0 0 0 2px !important;
+  border: 1px solid #E7EAF0 !important;
+  border-radius: 9px !important;
+  background: #fff !important;
+  color: #667085 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 14px !important;
+}
+
+.top-logout:hover {
+  background: #F7F8FA !important;
+  color: #172033 !important;
+  border-color: #D8DDE6 !important;
+}
+
+.top-actions {
+  gap: 10px !important;
+}
+
+/* ---------- Request date field ---------- */
+.date-wrap {
+  position: relative !important;
+  width: 100% !important;
+}
+
+.form-card .date-wrap input[type="date"] {
+  width: 100% !important;
+  padding-right: 44px !important;
+  color: #344054 !important;
+  cursor: pointer !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+}
+
+/* Remove Chromium/Samsung native calendar affordance so it doesn't
+   conflict with the custom icon. The input itself remains clickable. */
+.form-card .date-wrap input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  position: absolute !important;
+  inset: 0 !important;
+  cursor: pointer !important;
+}
+
+.date-icon {
+  position: absolute !important;
+  right: 14px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  pointer-events: none !important;
+  color: #667085 !important;
+  font-size: 13px !important;
+}
+
+.form-card .date-wrap:focus-within .date-icon {
+  color: #1769E0 !important;
+}
+
+/* ---------- Responsive topbar ---------- */
+@media (max-width: 760px) {
+  .topbar {
+    padding: 0 14px !important;
+  }
+
+  .top-actions {
+    margin-left: auto !important;
+    gap: 7px !important;
+  }
+
+  .top-actions .divider,
+  .top-actions #topName {
+    display: none !important;
+  }
+
+  .top-logout {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+    border-radius: 10px !important;
+  }
+
+  .form-card .date-wrap input[type="date"] {
+    padding-right: 44px !important;
+  }
+}
+
