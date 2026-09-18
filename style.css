@@ -6,7 +6,7 @@
 
 
 /* Review submission states */
-.feedback-success { display:flex; align-items:flex-start; gap:12px; margin-top:12px; padding:14px; border:1px solid #d9e4ee; border-radius:10px; background:#f7fafc; }
+.feedback-success { display:flex; align-items:flex-start; gap:12px; margin-top:12px; padding:14px; border:1px solid #d9e4ee; border-radius:10px; background:#f7fafc; }FDRAWE
 .feedback-success-icon { font-size:22px; line-height:1; margin-top:1px; }
 .feedback-success h4 { margin:0 0 3px; font-size:14px; }
 .feedback-success p { margin:0; font-size:13px; color:#667085; line-height:1.45; }
@@ -1435,13 +1435,18 @@ body {
 /* Mobile: use a little breathing room around the artwork. */
 @media (max-width: 760px) {
   .drawer-preview {
-    border-radius: 8px !important;
-    margin-bottom: 14px !important;
+    margin: 0 16px 18px !important;
+    border-radius: 10px !important;
+    overfloe: hidden !important;
+    background: #F7F8FA !important;
   }
 
   .drawer-preview img {
+    display: block !important;
     width: 100% !important;
     height: auto !important;
+    max-width: 100% !important;
+    object-fit: contain !important;
   }
 
   #publicArt,
