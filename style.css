@@ -1377,3 +1377,155 @@ body {
     margin-top: -2px !important;
   }
 }
+
+
+/* =========================================================
+   DesignHub v16 — full artwork preview for reviewers
+   ========================================================= */
+
+/*
+  Detail drawer / public review previews must never crop the
+  actual artwork. Keep the container flexible and let the image
+  use its natural aspect ratio.
+*/
+.drawer-preview {
+  height: auto !important;
+  min-height: 0 !important;
+  aspect-ratio: auto !important;
+  overflow: hidden !important;
+  background: #F7F8FA !important;
+}
+
+.drawer-preview img,
+#sharePreview img,
+#publicArt img {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  max-width: 100% !important;
+  max-height: none !important;
+  object-fit: contain !important;
+  object-position: center top !important;
+}
+
+/* Public review artwork: show the entire uploaded asset. */
+#publicArt {
+  height: auto !important;
+  min-height: 0 !important;
+  aspect-ratio: auto !important;
+  overflow: visible !important;
+  background: #F7F8FA !important;
+}
+
+#sharePreview {
+  height: auto !important;
+  min-height: 0 !important;
+  aspect-ratio: auto !important;
+  overflow: visible !important;
+  background: #F7F8FA !important;
+}
+
+/* Keep the detail drawer scrollable when a tall mobile artwork
+   is opened. */
+.drawer-body {
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+
+/* Mobile: use a little breathing room around the artwork. */
+@media (max-width: 760px) {
+  .drawer-preview {
+    border-radius: 8px !important;
+    margin-bottom: 14px !important;
+  }
+
+  .drawer-preview img {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  #publicArt,
+  #sharePreview {
+    width: 100% !important;
+  }
+
+  #publicArt img,
+  #sharePreview img {
+    width: 100% !important;
+    height: auto !important;
+  }
+}
+
+
+/* =========================================================
+   DesignHub v17 — adaptive artwork preview
+   No fixed artwork ratio. Every asset keeps its own ratio.
+   ========================================================= */
+
+/* Generic artwork preview surface */
+.drawer-preview,
+#sharePreview,
+#publicArt {
+  aspect-ratio: auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+  background: #F7F8FA !important;
+}
+
+/*
+  Responsive "fit" behavior:
+  - landscape assets can use the available width
+  - portrait/tall assets are reduced until the whole artwork
+    fits inside the available preview viewport
+  - no crop, no distortion, no forced 1080x2340 ratio
+*/
+.drawer-preview img,
+#sharePreview img,
+#publicArt img {
+  display: block !important;
+  width: auto !important;
+  height: auto !important;
+  max-width: 100% !important;
+  max-height: min(72vh, 760px) !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  flex: 0 1 auto !important;
+}
+
+/* For wide artwork, allow it to fill the preview width while
+   still respecting the height limit. */
+@media (min-width: 761px) {
+  .drawer-preview img,
+  #sharePreview img,
+  #publicArt img {
+    max-width: 100% !important;
+    max-height: min(72vh, 760px) !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .drawer-preview,
+  #sharePreview,
+  #publicArt {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .drawer-preview img,
+  #sharePreview img,
+  #publicArt img {
+    max-width: 100% !important;
+    max-height: calc(100dvh - 190px) !important;
+  }
+
+  /* Public review modal can scroll around the full artwork,
+     rather than cutting it off. */
+  #publicArt {
+    overflow: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+}
