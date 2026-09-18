@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DesignHub — Design Asset Manager</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: {
+        fontFamily: { sans: ['Inter','sans-serif'] },
+        colors: { ink:'#172033', muted:'#667085', line:'#E7EAF0', primary:'#1769E0', surface:'#F7F8FA' }
+      }}
+    }
+  </script>
+  <link rel="stylesheet" href="style.css?v=9">
+</head>
+<body class="bg-surface text-ink font-sans antialiased">
+<div class="min-h-screen flex">
+  <aside id="sidebar" class="sidebar">
+    <div class="brand"><div class="brand-mark" title="DesignHub" aria-label="DesignHub">D</div><div><b>DesignHub</b><small>ASSET MANAGER</small></div></div>
+    <nav>
+      <div class="nav-label">Workspace</div>
+      <button class="nav-item active" data-view="dashboard"><i class="fa-solid fa-house"></i>Dashboard</button>
+      <button class="nav-item" data-view="library"><i class="fa-solid fa-images"></i>Design Library</button>
+      <button class="nav-item" data-view="shared"><i class="fa-solid fa-arrow-up-right-from-square"></i>Shared</button>
+      <div class="nav-label gap-top">Manage</div>
+      <button class="nav-item" data-view="folders"><i class="fa-regular fa-folder"></i>Folders</button>
+      <button class="nav-item" data-view="trash"><i class="fa-regular fa-trash-can"></i>Trash</button>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="storage"><div class="storage-top"><b>Storage</b><span>2.4 GB / 10 GB</span></div><div class="storage-bar"><span></span></div><small>7.6 GB available</small></div>
+      <div class="profile"><div class="avatar" id="profileAvatar">AM</div><div><b id="profileName">Admin</b><small>UI/UX Analyst</small></div><button id="logoutBtn" title="Sign out" aria-label="Sign out"><i class="fa-solid fa-arrow-right-from-bracket"></i></button></div>
+    </div>
+  </aside>
+  <div id="sidebarBackdrop" class="sidebar-backdrop hidden"></div>
+
+  <main class="main">
+    <header class="topbar">
+      <button id="sidebarToggle" class="sidebar-toggle" type="button" aria-label="Open navigation" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
+      <span id="pageTitle">Dashboard</span>
+      <div class="top-actions">
+        <button id="notifBtn" class="icon-btn notification"><i class="fa-regular fa-bell"></i><em>3</em></button>
+        <div class="divider"></div><div class="avatar small" id="topAvatar">AM</div><span id="topName">Admin</span>
+      </div>
+    </header>
+
+    <div class="content">
+      <section id="dashboardView" class="view">
+        <div class="page-intro"><div><h1 id="greetingTitle">Good afternoon</h1><p>Here’s what’s happening with your design assets.</p></div><button class="primary-btn" data-open-new><i class="fa-solid fa-plus"></i> New Design</button></div>
+
+        <div class="stats">
+          <div class="stat"><span class="stat-icon blue"><i class="fa-regular fa-images"></i></span><div><small>Total Designs</small><strong>128</strong></div><label>+12%</label></div>
+          <div class="stat"><span class="stat-icon amber"><i class="fa-regular fa-clock"></i></span><div><small>In Progress</small><strong>12</strong></div><label>4 due soon</label></div>
+          <div class="stat"><span class="stat-icon red"><i class="fa-solid fa-rotate"></i></span><div><small>Need Revision</small><strong id="revisionCount">3</strong></div><label class="attention">Action needed</label></div>
+          <div class="stat"><span class="stat-icon green"><i class="fa-solid fa-check"></i></span><div><small>Approved</small><strong>103</strong></div><label>+8%</label></div>
+        </div>
+
+        <div class="dashboard-grid">
+          <div class="panel"><div class="panel-head"><div><h2>Recent Designs</h2><p>Latest assets added to your library</p></div><button class="link-btn" data-view="library">View all <i class="fa-solid fa-arrow-right"></i></button></div><div id="recentGrid" class="design-grid compact"></div></div>
+          <div class="panel"><div class="panel-head"><div><h2>Needs Your Attention</h2><p>Recent feedback from reviewers</p></div></div><div id="attentionList"></div></div>
+        </div>
+      </section>
+
+      <section id="libraryView" class="view hidden">
+        <div class="page-intro"><div><div class="crumb"><span>Library</span><i class="fa-solid fa-chevron-right"></i><b>All Designs</b></div><h1>Design Library</h1><p>Browse, organize and share your design assets.</p></div><button class="primary-btn" data-open-new><i class="fa-solid fa-plus"></i> New Design</button></div>
+        <div class="panel">
+          <div class="toolbar"><div class="search"><i class="fa-solid fa-magnifying-glass"></i><input id="search" placeholder="Search designs, requester, purpose..."></div><button class="filter-btn" id="filterBtn"><i class="fa-solid fa-sliders"></i> Filter</button><button class="filter-btn"><i class="fa-solid fa-arrow-down-wide-short"></i> Latest</button><div class="view-toggle"><button id="gridBtn" class="active"><i class="fa-solid fa-grid-2"></i></button><button id="listBtn"><i class="fa-solid fa-list"></i></button></div></div>
+          <div id="filterPanel" class="filter-panel hidden"><div class="filter-field"><label>Status</label><div class="select-wrap"><select id="statusFilter"><option value="">All statuses</option><option>New</option><option>In Progress</option><option>Ready for Review</option><option>Need Revision</option><option>Approved</option></select><i class="fa-solid fa-chevron-down select-chevron"></i></div></div><div class="filter-field"><label>Purpose</label><div class="select-wrap"><select id="purposeFilter"><option value="">All purposes</option><option>Instagram Post</option><option>Instagram Story</option><option>Banner</option><option>Push Notification</option><option>Email Banner</option><option>Presentation</option></select><i class="fa-solid fa-chevron-down select-chevron"></i></div></div><button id="clearFilters">Clear filters</button></div>
+          <div class="library-meta"><span id="resultCount"></span><div class="folder-chips"><button class="active">All Designs</button><button>Instagram</button><button>Banner</button><button>Push Notification</button></div></div>
+          <div id="libraryGrid" class="design-grid library-grid"></div><div id="libraryList" class="hidden list-wrap"></div>
+        </div>
+      </section>
+
+      <section id="otherView" class="view hidden"><div class="page-intro"><div><h1 id="otherTitle"></h1><p id="otherDesc"></p></div></div><div class="panel empty"><div class="empty-icon"><i class="fa-regular fa-folder-open"></i></div><h2 id="emptyTitle"></h2><p id="emptyText"></p><button class="secondary-btn" data-view="library">Go to Design Library</button></div></section>
+    </div>
+  </main>
+</div>
+
+<!-- notification popover -->
+<div id="notificationPanel" class="notification-panel hidden"><div class="notif-head"><b>Notifications</b><span>3 new</span></div><div id="notificationList"></div><button class="notif-footer">View all notifications</button></div>
+
+<!-- detail drawer -->
+<div id="backdrop" class="backdrop hidden"></div>
+<aside id="drawer" class="drawer"><div class="drawer-head"><div><small>Design Details</small><h2 id="drawerTitle"></h2></div><button data-close-drawer><i class="fa-solid fa-xmark"></i></button></div><div id="drawerBody" class="drawer-body"></div></aside>
+
+<!-- share modal -->
+<div id="shareModal" class="modal hidden"><div class="share-card"><button class="modal-x" data-close-share><i class="fa-solid fa-xmark"></i></button><small>Share Design</small><h2 id="shareTitle"></h2><div id="sharePreview" class="share-preview"></div><p class="share-caption">Copy link to share this design</p><div class="share-link"><span id="shareUrl"></span><button id="copyBtn">Copy</button></div><div id="copyState" class="copy-state hidden"><i class="fa-solid fa-circle-check"></i> Link copied to clipboard</div></div></div>
+
+<!-- public preview simulation -->
+<div id="publicModal" class="modal hidden"><div class="public-page"><button class="modal-x" data-close-public><i class="fa-solid fa-xmark"></i></button><div class="public-brand"><div class="brand-mark">D</div><b>DesignHub</b></div><div id="publicArt" class="public-art"></div><div class="public-info"><span id="publicPurpose" class="tag"></span><h2 id="publicTitle"></h2><p id="publicMeta"></p><div class="public-divider"></div><h3>Review this design</h3><div class="feedback-choice"><button class="choice active" data-choice="approved"><i class="fa-regular fa-circle-check"></i><span><b>Looks good</b><small>No changes needed.</small></span></button><button class="choice" data-choice="revision"><i class="fa-regular fa-pen-to-square"></i><span><b>Needs revision</b><small>Tell the designer what to change.</small></span></button></div><textarea id="feedbackText" class="feedback hidden" placeholder="What needs to be revised?"></textarea><button id="submitFeedback" class="primary-btn feedback-submit">Submit Feedback</button><div id="feedbackSuccess" class="feedback-success hidden" role="status" aria-live="polite"><div class="feedback-success-icon"><i class="fa-solid fa-circle-check"></i></div><div><h4 id="feedbackSuccessTitle">Review submitted</h4><p id="feedbackSuccessText">Thank you. The designer has been notified.</p></div></div><button id="feedbackDone" type="button" class="secondary-btn feedback-done hidden">Done</button></div></div></div>
+
+<!-- new design -->
+<div id="newModal" class="modal hidden"><div class="form-card"><button class="modal-x" data-close-new><i class="fa-solid fa-xmark"></i></button><small>New Design</small><h2>Add design asset</h2><p class="form-sub">Add the design and its request context.</p><form id="newForm"><div class="two"><label>Design name<input name="name" required placeholder="e.g. Promo Ramadhan 2026"></label><label>Requester<input name="requester" required placeholder="e.g. Marketing"></label><label>Purpose<div class="select-wrap"><select name="purpose"><option>Instagram Post</option><option>Instagram Story</option><option>Banner</option><option>Push Notification</option><option>Email Banner</option><option>Presentation</option></select><i class="fa-solid fa-chevron-down select-chevron"></i></div></label><label>Request date<input name="date" type="date"></label><label>Status<div class="select-wrap"><select name="status"><option>New</option><option>In Progress</option><option>Ready for Review</option></select><i class="fa-solid fa-chevron-down select-chevron"></i></div></label><label>Folder<div class="select-wrap"><select name="folder"><option value="Instagram">Instagram</option><option value="Banner">Banner</option><option value="Push Notification">Push Notification</option><option value="Email Banner">Email Banner</option><option value="Presentation">Presentation</option></select><i class="fa-solid fa-chevron-down select-chevron"></i></div></label></div><label>Description<textarea name="description" placeholder="Brief context for this design..."></textarea></label><div class="upload" id="uploadZone" tabindex="0"><input id="fileInput" type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml" hidden><i class="fa-solid fa-cloud-arrow-up"></i><b id="uploadTitle">Drop your design here</b><small id="uploadHint">PNG, JPG, WEBP, SVG up to 20 MB</small></div><div id="newFormError" class="form-error hidden" role="alert"></div><div class="form-actions"><button type="button" class="secondary-btn" data-close-new>Cancel</button><button type="submit" class="primary-btn"><i class="fa-solid fa-plus"></i> Add Design</button></div></form></div></div>
+
+<div id="toast" class="toast hidden"></div>
+
+<!-- Admin authentication -->
+<div id="authScreen" class="auth-screen hidden">
+  <div class="auth-card">
+    <div class="brand auth-brand"><div class="brand-mark" title="DesignHub" aria-label="DesignHub">D</div><div><b>DesignHub</b><small>ASSET MANAGER</small></div></div>
+    <div class="auth-copy"><h1>Welcome back</h1><p>Sign in to manage your design assets.</p></div>
+    <form id="loginForm">
+      <label>Email<input id="loginEmail" type="email" autocomplete="email" placeholder="you@example.com" required></label>
+      <label>Password<div class="password-field"><input id="loginPassword" type="password" autocomplete="current-password" placeholder="••••••••" required><button type="button" id="togglePassword" aria-label="Show password"><i class="fa-regular fa-eye"></i></button></div></label>
+      <button class="primary-btn auth-submit" type="submit"><span id="loginLabel">Sign in</span><i id="loginSpinner" class="fa-solid fa-spinner fa-spin hidden"></i></button>
+      <p id="loginError" class="auth-error hidden"></p>
+    </form>
+    <small class="auth-note">Internal workspace · Supabase Auth</small>
+  </div>
+</div>
+
+<div id="appLoading" class="app-loading"><i class="fa-solid fa-spinner fa-spin"></i></div>
+<script src="app.js"></script>
+</body>
+</html>
