@@ -867,3 +867,230 @@ body {
     white-space: nowrap !important;
   }
 }
+
+
+/* =========================================================
+   DesignHub v14 — sidebar close + mobile library table
+   ========================================================= */
+
+/* Close button is intentionally inside the expanded mobile drawer,
+   so the user can close it without reaching the edge/backdrop. */
+.sidebar-close {
+  display: none;
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  min-height: 36px !important;
+  padding: 0 !important;
+  margin-left: auto !important;
+  border: 1px solid #E7EAF0 !important;
+  border-radius: 9px !important;
+  background: #fff !important;
+  color: #667085 !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex: 0 0 auto !important;
+}
+
+.sidebar-close:hover {
+  background: #F7F8FA !important;
+  color: #172033 !important;
+}
+
+@media (max-width: 760px) {
+  .sidebar .brand {
+    padding: 0 14px !important;
+    justify-content: flex-start !important;
+  }
+
+  .sidebar .brand > div:last-of-type {
+    display: block !important;
+  }
+
+  .sidebar .brand b {
+    font-size: 16px !important;
+  }
+
+  .sidebar .brand small {
+    font-size: 8px !important;
+  }
+
+  .sidebar-close {
+    display: inline-flex !important;
+  }
+
+  /* Expanded drawer should be a full navigation panel, not a
+     72px icon rail. */
+  .sidebar.open {
+    width: min(82vw, 300px) !important;
+  }
+
+  .sidebar.open .nav-label {
+    display: block !important;
+  }
+
+  .sidebar.open .nav-item {
+    width: 100% !important;
+    height: 44px !important;
+    justify-content: flex-start !important;
+    padding: 0 12px !important;
+    font-size: 12px !important;
+  }
+
+  .sidebar.open .nav-item i {
+    width: 18px !important;
+    font-size: 14px !important;
+  }
+
+  .sidebar.open .storage {
+    display: block !important;
+  }
+
+  .sidebar.open .profile > div {
+    display: block !important;
+  }
+
+  .sidebar.open .profile {
+    justify-content: flex-start !important;
+  }
+
+  .sidebar.open .profile button {
+    display: none !important;
+  }
+
+  /* ---------- Library data table → compact cards ---------- */
+  .list-wrap {
+    padding: 10px 12px 14px !important;
+    overflow: visible !important;
+  }
+
+  .list-table,
+  .list-table tbody {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .list-table thead {
+    display: none !important;
+  }
+
+  .list-table tbody tr.list-row {
+    display: grid !important;
+    grid-template-columns: 58px minmax(0, 1fr) !important;
+    column-gap: 12px !important;
+    row-gap: 0 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    padding: 12px 2px !important;
+    border-bottom: 1px solid #F0F2F5 !important;
+    background: #fff !important;
+  }
+
+  .list-table tbody tr.list-row:last-child {
+    border-bottom: 0 !important;
+  }
+
+  .list-table tbody td {
+    display: block !important;
+    min-width: 0 !important;
+    width: auto !important;
+    padding: 0 !important;
+    border: 0 !important;
+    overflow: hidden !important;
+  }
+
+  /* Preview */
+  .list-table tbody td:nth-child(1) {
+    grid-column: 1;
+    grid-row: 1;
+    width: 58px !important;
+  }
+
+  .list-table .list-preview {
+    width: 58px !important;
+    height: 58px !important;
+    border-radius: 7px !important;
+  }
+
+  /* Design name + filename */
+  .list-table tbody td:nth-child(2) {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: center !important;
+    padding-right: 2px !important;
+  }
+
+  .list-table .list-name {
+    display: block !important;
+    font-size: 11px !important;
+    line-height: 1.35 !important;
+    white-space: normal !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .list-table tbody td:nth-child(2) > div {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  /* Metadata becomes a neat 2×2 area below the preview/title. */
+  .list-table tbody td:nth-child(3),
+  .list-table tbody td:nth-child(4),
+  .list-table tbody td:nth-child(5),
+  .list-table tbody td:nth-child(6) {
+    position: relative !important;
+    margin-top: 10px !important;
+    padding-top: 15px !important;
+    overflow: visible !important;
+    font-size: 10px !important;
+    line-height: 1.35 !important;
+  }
+
+  .list-table tbody td:nth-child(3) {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .list-table tbody td:nth-child(4) {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .list-table tbody td:nth-child(5) {
+    grid-column: 1;
+    grid-row: 3;
+  }
+
+  .list-table tbody td:nth-child(6) {
+    grid-column: 2;
+    grid-row: 3;
+  }
+
+  .list-table tbody td:nth-child(3)::before,
+  .list-table tbody td:nth-child(4)::before,
+  .list-table tbody td:nth-child(5)::before,
+  .list-table tbody td:nth-child(6)::before {
+    display: block !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    content: "" !important;
+    color: #98A2B3 !important;
+    font-size: 8px !important;
+    font-weight: 500 !important;
+    line-height: 1 !important;
+  }
+
+  .list-table tbody td:nth-child(3)::before { content: "Requester" !important; }
+  .list-table tbody td:nth-child(4)::before { content: "Purpose" !important; }
+  .list-table tbody td:nth-child(5)::before { content: "Request date" !important; }
+  .list-table tbody td:nth-child(6)::before { content: "Status" !important; }
+
+  .list-table tbody td:nth-child(6) .status {
+    display: inline-flex !important;
+    margin-top: -2px !important;
+  }
+}
