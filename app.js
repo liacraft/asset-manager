@@ -444,10 +444,16 @@ function closeSidebar() {
   backdrop?.classList.add('hidden');
   toggle?.setAttribute('aria-expanded', 'false');
   toggle?.setAttribute('aria-label', 'Open navigation');
+  if (toggle) toggle.innerHTML = '<i class="fa-solid fa-bars"></i>';
 }
 
 function bindEvents() {
   document.addEventListener('click', async event => {
+    const sidebarClose = event.target.closest('#sidebarClose');
+    if (sidebarClose) {
+      closeSidebar();
+      return;
+    }
     const toggle = event.target.closest('#sidebarToggle');
     if (toggle) {
       const sidebar = $('#sidebar');
@@ -456,6 +462,9 @@ function bindEvents() {
       backdrop.classList.toggle('hidden', !isOpen);
       toggle.setAttribute('aria-expanded', String(isOpen));
       toggle.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
+      toggle.innerHTML = isOpen
+        ? '<i class="fa-solid fa-xmark"></i>'
+        : '<i class="fa-solid fa-bars"></i>';
       return;
     }
     if (event.target.closest('#sidebarBackdrop')) {
