@@ -691,3 +691,179 @@ body {
   }
 }
 
+
+
+/* =========================================================
+   DesignHub v11 — AUTH SCREEN MUST COVER THE APP SHELL
+   ========================================================= */
+
+/*
+  The mobile topbar intentionally has z-index: 900.
+  The auth screen previously used z-index: 100, so the topbar
+  rendered above the login screen. The auth layer must always
+  sit above every authenticated-app element.
+*/
+.auth-screen {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 10000 !important;
+  width: 100vw !important;
+  height: 100dvh !important;
+  min-height: 100vh !important;
+  display: grid !important;
+  place-items: center !important;
+  overflow: auto !important;
+  isolation: isolate !important;
+}
+
+.auth-screen.hidden {
+  display: none !important;
+}
+
+/* Keep the login page visually self-contained. */
+.auth-screen ~ * {
+  /* no-op: auth is a full-screen layer */
+}
+
+@media (max-width: 760px) {
+  .auth-screen {
+    padding: 16px !important;
+    align-items: center !important;
+  }
+
+  .auth-card {
+    width: min(390px, 100%) !important;
+    max-height: calc(100dvh - 32px) !important;
+    overflow-y: auto !important;
+  }
+}
+
+
+/* =========================================================
+   DesignHub v12 — notification bell polish
+   ========================================================= */
+
+/* Reference-style notification control:
+   standalone outline bell, centered in a comfortable hit area. */
+.top-actions .notification {
+  position: relative !important;
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  min-height: 40px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border: 0 !important;
+  background: transparent !important;
+  color: #667085 !important;
+  border-radius: 9px !important;
+  line-height: 1 !important;
+}
+
+.top-actions .notification > i {
+  display: block !important;
+  font-size: 21px !important;
+  line-height: 1 !important;
+  font-weight: 400 !important;
+}
+
+.top-actions .notification:hover {
+  background: #F7F8FA !important;
+  color: #344054 !important;
+}
+
+.top-actions .notification em {
+  position: absolute !important;
+  top: 0 !important;
+  right: -1px !important;
+  width: 18px !important;
+  height: 18px !important;
+  min-width: 18px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: grid !important;
+  place-items: center !important;
+  border: 2px solid #fff !important;
+  border-radius: 50% !important;
+  background: #1769E0 !important;
+  color: #fff !important;
+  font-size: 9px !important;
+  font-style: normal !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+}
+
+@media (max-width: 760px) {
+  .top-actions .notification {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+  }
+
+  .top-actions .notification > i {
+    font-size: 21px !important;
+  }
+
+  .top-actions .notification em {
+    top: 0 !important;
+    right: -1px !important;
+  }
+}
+
+
+/* =========================================================
+   DesignHub v13 — compact mobile stat cards
+   ========================================================= */
+
+/* Four KPI/stat cards become a balanced 2-column grid on mobile.
+   This reduces vertical whitespace while keeping the cards readable. */
+@media (max-width: 760px) {
+  .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+  }
+
+  .stat {
+    min-width: 0 !important;
+    min-height: 112px !important;
+    height: auto !important;
+    padding: 13px !important;
+    align-items: flex-start !important;
+    position: relative !important;
+  }
+
+  .stat-icon {
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+    border-radius: 8px !important;
+  }
+
+  .stat > div {
+    min-width: 0 !important;
+  }
+
+  .stat small {
+    font-size: 9px !important;
+    line-height: 1.3 !important;
+  }
+
+  .stat strong {
+    font-size: 22px !important;
+    line-height: 1.1 !important;
+    margin-top: 5px !important;
+  }
+
+  .stat label {
+    position: absolute !important;
+    left: 13px !important;
+    bottom: 12px !important;
+    margin: 0 !important;
+    font-size: 8px !important;
+    padding: 4px 6px !important;
+    white-space: nowrap !important;
+  }
+}
